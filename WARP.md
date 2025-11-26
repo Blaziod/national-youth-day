@@ -81,6 +81,13 @@ Place static files in `public/` directory. They are served from the root path:
 - `public/image.png` → `/image.png`
 - Use `next/image` component for optimized image loading
 
+## Application Routes
+
+### Pages
+- **`/`**: Home page - Event invitation landing page
+- **`/reminder`**: Reminder form page - Users set SMS reminders for the event
+- **`/order-service`**: Program schedule page - Displays event timeline
+
 ## API Routes
 
 ### Reminder System
@@ -97,19 +104,32 @@ Place static files in `public/` directory. They are served from the root path:
 - Service methods in `lib/termii.ts`
 - Sends confirmation SMS on form submission
 - Sends reminder SMS at scheduled time
+- Phone numbers are Nigeria-specific: users enter 10 digits (e.g., `8012345678`), automatically prefixed with `234` country code
 
 ### Timezone
 - All date/time operations use **Africa/Lagos** timezone (WAT - UTC+1)
 - Configured in cron job to match user's local time
 
+## Environment Variables
+
+Required environment variables (defined in `.env`):
+```env
+DATABASE_URL="postgresql://..."          # PostgreSQL connection string (Neon)
+TERMII_API_KEY="..."                     # Termii SMS API key
+TERMII_SECRET_KEY="..."                  # Termii secret key
+TERMII_SENDER_ID="IDCODE"                # SMS sender ID
+```
+
 ## Prisma Commands
 
 ```bash
-pnpm prisma generate       # Generate Prisma Client
+pnpm prisma generate       # Generate Prisma Client to generated/prisma/client
 pnpm prisma studio         # Open Prisma Studio (database GUI)
 pnpm prisma db push        # Push schema changes to database
 pnpm prisma migrate dev    # Create and apply migrations
 ```
+
+Note: Prisma client is generated to custom path `generated/prisma/client` (configured in `schema.prisma`).
 
 ## Cron Job Setup
 
